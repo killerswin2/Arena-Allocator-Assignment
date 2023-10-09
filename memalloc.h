@@ -47,7 +47,7 @@ enum ALGORITHM
  * \param algorithm The heap algorithm to implement
  * \return 0 on success. -1 on failure
  **/
-int mavalloc_init( size_t size, enum ALGORITHM algorithm );
+int memalloc_init( size_t size, enum ALGORITHM algorithm );
 
 
 /**
@@ -57,7 +57,7 @@ int mavalloc_init( size_t size, enum ALGORITHM algorithm );
  *
  * \return None 
  **/
-void mavalloc_destroy( );
+void memalloc_destroy( );
 
 
 /**
@@ -74,7 +74,7 @@ void mavalloc_destroy( );
  *
  * \return A pointer to the available memory or NULL if no free block is found 
  **/
-void * mavalloc_alloc( size_t size );
+void * memalloc_alloc( size_t size );
 
 
 /*
@@ -87,7 +87,7 @@ void * mavalloc_alloc( size_t size );
  *
  * \return none
  */
-void mavalloc_free(void *ptr);
+void memalloc_free(void *ptr);
 
 /*
  * \brief Allocator size
@@ -96,5 +96,5 @@ void mavalloc_free(void *ptr);
  *
  * \return The size of the allocator linked list 
  */
-int mavalloc_size( );
+int memalloc_size( );
 

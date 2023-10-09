@@ -20,30 +20,30 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "mavalloc.h"
+#include "memalloc.h"
 
-int mavalloc_init( size_t size, enum ALGORITHM algorithm )
+int memalloc_init( size_t size, enum ALGORITHM algorithm )
 {
   return 0;
 }
 
-void mavalloc_destroy( )
+void memalloc_destroy( )
 {
   return;
 }
 
-void * mavalloc_alloc( size_t size )
+void * memalloc_alloc( size_t size )
 {
   // only return NULL on failure
   return NULL;
 }
 
-void mavalloc_free( void * ptr )
+void memalloc_free( void * ptr )
 {
   return;
 }
 
-int mavalloc_size( )
+int memalloc_size( )
 {
   int number_of_nodes = 0;
 

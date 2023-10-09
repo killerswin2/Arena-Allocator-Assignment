@@ -1,4 +1,4 @@
-#include "mavalloc.h"
+#include "memalloc.h"
 #include "tinytest.h"
 #include <stdio.h>
 #include <string.h>
@@ -9,18 +9,18 @@
 */
 int test_case_1()
 {
-  mavalloc_init( 65535, BEST_FIT );
-  char * ptr = ( char * ) mavalloc_alloc ( 65535 );
+  memalloc_init( 65535, BEST_FIT );
+  char * ptr = ( char * ) memalloc_alloc ( 65535 );
 
-  int size = mavalloc_size();
+  int size = memalloc_size();
 
   // If you failed here your allocation on line 13 failed
   TINYTEST_ASSERT( ptr ); 
 
   // If you failed here your linked list did not have a single node
-  // check your mavalloc_alloc or mavalloc_size
+  // check your memalloc_alloc or memalloc_size
   TINYTEST_EQUAL( size, 1); 
-  mavalloc_destroy( );
+  memalloc_destroy( );
   return 1;
 }
 
@@ -34,10 +34,10 @@ int test_case_1()
 */
 int test_case_2()
 {
-  mavalloc_init( 128000, BEST_FIT );
+  memalloc_init( 128000, BEST_FIT );
 
-  char * ptr1    = (char*)mavalloc_alloc( 65535 );
-  char * ptr2    = (char*)mavalloc_alloc( 65 );
+  char * ptr1    = (char*)memalloc_alloc( 65535 );
+  char * ptr2    = (char*)memalloc_alloc( 65 );
 
   // If you failed here your allocation on line 39 failed
   TINYTEST_ASSERT( ptr1 ); 
@@ -45,19 +45,19 @@ int test_case_2()
   // If you failed here your allocation on line 40 failed
   TINYTEST_ASSERT( ptr2 ); 
 
-  mavalloc_free( ptr1 );
-  mavalloc_free( ptr2 );
+  memalloc_free( ptr1 );
+  memalloc_free( ptr2 );
 
-  int size = mavalloc_size();
+  int size = memalloc_size();
 
   // If you failed here your linked list did not have a single node
-  // check your mavalloc_alloc or mavalloc_size and make sure you
+  // check your memalloc_alloc or memalloc_size and make sure you
   // are combining adjacent free nodes and counting your link list
   // correctly
 
   TINYTEST_EQUAL( size, 1 ); 
 
-  mavalloc_destroy( );
+  memalloc_destroy( );
   return 1;
 }
 
@@ -71,10 +71,10 @@ int test_case_2()
 */
 int test_case_3()
 {
-  mavalloc_init( 65600, BEST_FIT );
+  memalloc_init( 65600, BEST_FIT );
 
-  char * ptr1    = (char*)mavalloc_alloc( 65536 );
-  char * ptr2    = (char*)mavalloc_alloc( 64 );
+  char * ptr1    = (char*)memalloc_alloc( 65536 );
+  char * ptr2    = (char*)memalloc_alloc( 64 );
 
   // If you failed here your allocation on line 76 failed
   TINYTEST_ASSERT( ptr1 ); 
@@ -82,19 +82,19 @@ int test_case_3()
   // If you failed here your allocation on line 77 failed
   TINYTEST_ASSERT( ptr2 ); 
 
-  mavalloc_free( ptr2 );
-  mavalloc_free( ptr1 );
+  memalloc_free( ptr2 );
+  memalloc_free( ptr1 );
 
-  int size = mavalloc_size();
+  int size = memalloc_size();
 
   // If you failed here your linked list did not have a single node
-  // check your mavalloc_alloc or mavalloc_size and make sure you
+  // check your memalloc_alloc or memalloc_size and make sure you
   // are combining adjacent free nodes and counting your link list
   // correctly
 
   TINYTEST_EQUAL( size, 1 ); 
 
-  mavalloc_destroy( );
+  memalloc_destroy( );
   return 1;
 }
 
@@ -105,12 +105,12 @@ int test_case_3()
 */
 int test_case_4()
 {
-  mavalloc_init( 65535, FIRST_FIT );
+  memalloc_init( 65535, FIRST_FIT );
 
-  char * ptr1  = ( char * ) mavalloc_alloc ( 10000 );
-  char * ptr2  = ( char * ) mavalloc_alloc ( 65 );
+  char * ptr1  = ( char * ) memalloc_alloc ( 10000 );
+  char * ptr2  = ( char * ) memalloc_alloc ( 65 );
 
-  int size = mavalloc_size();
+  int size = memalloc_size();
 
   // If you failed here your allocation on line 110 failed
   TINYTEST_ASSERT( ptr1 ); 
@@ -119,12 +119,12 @@ int test_case_4()
   TINYTEST_ASSERT( ptr2 ); 
 
   // If you failed here your linked list did not have three nodes
-  // check your mavalloc_alloc or mavalloc_size and make sure you
+  // check your memalloc_alloc or memalloc_size and make sure you
   // are allocating and splitting nodes and counting your link list
   // correctly
 
   TINYTEST_EQUAL( size, 3); 
-  mavalloc_destroy( );
+  memalloc_destroy( );
   return 1;
 }
 
@@ -136,17 +136,17 @@ int test_case_4()
 */
 int test_case_5()
 {
-  mavalloc_init( 4144, NEXT_FIT );
+  memalloc_init( 4144, NEXT_FIT );
 
-  char * ptr1 = ( char * ) mavalloc_alloc ( 1024 );
-  char * buf1 = ( char * ) mavalloc_alloc ( 4 );
-  char * ptr6 = ( char * ) mavalloc_alloc ( 16 );
-  char * buf2 = ( char * ) mavalloc_alloc ( 4 );
-  char * ptr2 = ( char * ) mavalloc_alloc ( 2048 );
-  char * buf3 = ( char * ) mavalloc_alloc ( 4 );
-  char * ptr7 = ( char * ) mavalloc_alloc ( 16 );
-  char * buf4 = ( char * ) mavalloc_alloc ( 4 );
-  char * ptr3 = ( char * ) mavalloc_alloc ( 1024 );
+  char * ptr1 = ( char * ) memalloc_alloc ( 1024 );
+  char * buf1 = ( char * ) memalloc_alloc ( 4 );
+  char * ptr6 = ( char * ) memalloc_alloc ( 16 );
+  char * buf2 = ( char * ) memalloc_alloc ( 4 );
+  char * ptr2 = ( char * ) memalloc_alloc ( 2048 );
+  char * buf3 = ( char * ) memalloc_alloc ( 4 );
+  char * ptr7 = ( char * ) memalloc_alloc ( 16 );
+  char * buf4 = ( char * ) memalloc_alloc ( 4 );
+  char * ptr3 = ( char * ) memalloc_alloc ( 1024 );
 
   // If you failed here your allocation on line 141 failed
   TINYTEST_ASSERT( ptr1 ); 
@@ -163,11 +163,11 @@ int test_case_5()
   // If you failed here your allocation on line 147 failed
   TINYTEST_ASSERT( ptr7 ); 
 
-  mavalloc_free( ptr1 ); 
-  mavalloc_free( ptr2 ); 
-  mavalloc_free( ptr3 ); 
+  memalloc_free( ptr1 ); 
+  memalloc_free( ptr2 ); 
+  memalloc_free( ptr3 ); 
 
-  char * ptr5 = ( char * ) mavalloc_alloc ( 2000 );
+  char * ptr5 = ( char * ) memalloc_alloc ( 2000 );
 
   // If you failed here your allocation on line 170 failed
   TINYTEST_ASSERT( ptr5 ); 
@@ -180,7 +180,7 @@ int test_case_5()
   buf3 = buf3;
   buf4 = buf4;
 
-  char * ptr4 = ( char * ) mavalloc_alloc ( 1000 );
+  char * ptr4 = ( char * ) memalloc_alloc ( 1000 );
 
   // If you failed here your allocation on line 183 failed
   TINYTEST_ASSERT( ptr4 ); 
@@ -191,7 +191,7 @@ int test_case_5()
   // If you failed here your Next Fit algorithm is not choosing
   // the correct hole 
   TINYTEST_EQUAL( ptr3, ptr4 ); 
-  mavalloc_destroy( );
+  memalloc_destroy( );
   return 1;
 }
 
@@ -202,12 +202,12 @@ int test_case_5()
 */
 int test_case_6()
 {
-  mavalloc_init( 71608, WORST_FIT );
-  char * ptr1    = ( char * ) mavalloc_alloc ( 65535 );
-  char * buffer1 = ( char * ) mavalloc_alloc( 4 );
-  char * ptr4    = ( char * ) mavalloc_alloc ( 64 );
-  char * buffer2 = ( char * ) mavalloc_alloc( 4 );
-  char * ptr2    = ( char * ) mavalloc_alloc ( 6000 );
+  memalloc_init( 71608, WORST_FIT );
+  char * ptr1    = ( char * ) memalloc_alloc ( 65535 );
+  char * buffer1 = ( char * ) memalloc_alloc( 4 );
+  char * ptr4    = ( char * ) memalloc_alloc ( 64 );
+  char * buffer2 = ( char * ) memalloc_alloc( 4 );
+  char * ptr2    = ( char * ) memalloc_alloc ( 6000 );
 
   // If you failed here your allocation on line 206 failed
   TINYTEST_ASSERT( ptr1 ); 
@@ -218,18 +218,18 @@ int test_case_6()
   // If you failed here your allocation on line 208 failed
   TINYTEST_ASSERT( ptr4 ); 
 
-  mavalloc_free( ptr1 ); 
-  mavalloc_free( ptr2 ); 
+  memalloc_free( ptr1 ); 
+  memalloc_free( ptr2 ); 
 
   buffer1 = buffer1;
   buffer2 = buffer2;
   ptr4 = ptr4;
 
-  char * ptr3 = ( char * ) mavalloc_alloc ( 1000 );
+  char * ptr3 = ( char * ) memalloc_alloc ( 1000 );
 
   // If you failed here then your worst fit picked the wrong node on line 228
   TINYTEST_EQUAL( ptr1, ptr3 ); 
-  mavalloc_destroy( );
+  memalloc_destroy( );
   return 1;
 }
 
@@ -240,12 +240,12 @@ int test_case_6()
 */
 int test_case_7()
 {
-  mavalloc_init( 75000, BEST_FIT );
-  char * ptr1    = ( char * ) mavalloc_alloc ( 65535 );
-  char * buffer1 = ( char * ) mavalloc_alloc( 1 );
-  char * ptr4    = ( char * ) mavalloc_alloc ( 65 );
-  char * buffer2 = ( char * ) mavalloc_alloc( 1 );
-  char * ptr2    = ( char * ) mavalloc_alloc ( 1500 );
+  memalloc_init( 75000, BEST_FIT );
+  char * ptr1    = ( char * ) memalloc_alloc ( 65535 );
+  char * buffer1 = ( char * ) memalloc_alloc( 1 );
+  char * ptr4    = ( char * ) memalloc_alloc ( 65 );
+  char * buffer2 = ( char * ) memalloc_alloc( 1 );
+  char * ptr2    = ( char * ) memalloc_alloc ( 1500 );
 
   // If you failed here your allocation on line 244 failed
   TINYTEST_ASSERT( ptr1 ); 
@@ -256,21 +256,21 @@ int test_case_7()
   // If you failed here your allocation on line 246 failed
   TINYTEST_ASSERT( ptr4 ); 
 
-  mavalloc_free( ptr1 ); 
-  mavalloc_free( ptr2 ); 
+  memalloc_free( ptr1 ); 
+  memalloc_free( ptr2 ); 
 
   buffer1 = buffer1;
   buffer2 = buffer2;
   ptr4 = ptr4;
 
-  char * ptr3 = ( char * ) mavalloc_alloc ( 1000 );
+  char * ptr3 = ( char * ) memalloc_alloc ( 1000 );
 
   // If you failed here your allocation on line 266 failed
   TINYTEST_ASSERT( ptr3 ); 
 
   // If you failed here your allocation on 266 picked the wrong node for Best Fit
   TINYTEST_EQUAL( ptr2, ptr3 ); 
-  mavalloc_destroy( );
+  memalloc_destroy( );
   return 1;
 }
 
@@ -281,13 +281,13 @@ int test_case_7()
 */
 int test_case_8()
 {
-  mavalloc_init( 255, BEST_FIT );
-  char * ptr = ( char * ) mavalloc_alloc ( 1000 );
+  memalloc_init( 255, BEST_FIT );
+  char * ptr = ( char * ) memalloc_alloc ( 1000 );
 
   // If you failed here your Best Fit allocation line 285 didn't return NULL like 
   // it should have
   TINYTEST_EQUAL( ptr, NULL ); 
-  mavalloc_destroy( );
+  memalloc_destroy( );
   return 1;
 }
 
@@ -298,14 +298,14 @@ int test_case_8()
 */
 int test_case_9()
 {
-  mavalloc_init( 255, FIRST_FIT );
-  char * ptr = ( char * ) mavalloc_alloc ( 1000 );
+  memalloc_init( 255, FIRST_FIT );
+  char * ptr = ( char * ) memalloc_alloc ( 1000 );
 
   // If you failed here your First Fit allocation on line 302 didn't return NULL like 
   // it should have
   TINYTEST_EQUAL( ptr, NULL ); 
 
-  mavalloc_destroy( );
+  memalloc_destroy( );
   return 1;
 }
 
@@ -316,14 +316,14 @@ int test_case_9()
 */
 int test_case_10()
 {
-  mavalloc_init( 255, WORST_FIT );
-  char * ptr = ( char * ) mavalloc_alloc ( 1000 );
+  memalloc_init( 255, WORST_FIT );
+  char * ptr = ( char * ) memalloc_alloc ( 1000 );
 
   // If you failed here your Worst Fit allocation on line 320 didn't return NULL like 
   // it should have
   TINYTEST_EQUAL( ptr, NULL ); 
 
-  mavalloc_destroy( );
+  memalloc_destroy( );
   return 1;
 }
 
@@ -334,17 +334,17 @@ int test_case_10()
 */
 int test_case_11()
 {
-  mavalloc_init( 4144, NEXT_FIT );
+  memalloc_init( 4144, NEXT_FIT );
 
-  char * ptr1 = ( char * ) mavalloc_alloc ( 1024 );
-  char * buf1 = ( char * ) mavalloc_alloc ( 4 );
-  char * ptr6 = ( char * ) mavalloc_alloc ( 16 );
-  char * buf2 = ( char * ) mavalloc_alloc ( 4 );
-  char * ptr2 = ( char * ) mavalloc_alloc ( 2048 );
-  char * buf3 = ( char * ) mavalloc_alloc ( 4 );
-  char * ptr7 = ( char * ) mavalloc_alloc ( 16 );
-  char * buf4 = ( char * ) mavalloc_alloc ( 4 );
-  char * ptr3 = ( char * ) mavalloc_alloc ( 1024 );
+  char * ptr1 = ( char * ) memalloc_alloc ( 1024 );
+  char * buf1 = ( char * ) memalloc_alloc ( 4 );
+  char * ptr6 = ( char * ) memalloc_alloc ( 16 );
+  char * buf2 = ( char * ) memalloc_alloc ( 4 );
+  char * ptr2 = ( char * ) memalloc_alloc ( 2048 );
+  char * buf3 = ( char * ) memalloc_alloc ( 4 );
+  char * ptr7 = ( char * ) memalloc_alloc ( 16 );
+  char * buf4 = ( char * ) memalloc_alloc ( 4 );
+  char * ptr3 = ( char * ) memalloc_alloc ( 1024 );
 
   // if you failed here your allocation on line 339 failed
   TINYTEST_ASSERT( ptr1 ); 
@@ -361,11 +361,11 @@ int test_case_11()
   // if you failed here your allocation on line 345 failed
   TINYTEST_ASSERT( ptr7 ); 
 
-  mavalloc_free( ptr1 ); 
-  mavalloc_free( ptr2 ); 
-  mavalloc_free( ptr3 ); 
+  memalloc_free( ptr1 ); 
+  memalloc_free( ptr2 ); 
+  memalloc_free( ptr3 ); 
 
-  char * ptr5 = ( char * ) mavalloc_alloc ( 2000 );
+  char * ptr5 = ( char * ) memalloc_alloc ( 2000 );
 
   // if you failed here your allocation on line 368 failed
   TINYTEST_ASSERT( ptr5 ); 
@@ -378,7 +378,7 @@ int test_case_11()
   buf3 = buf3;
   buf4 = buf4;
 
-  char * ptr4 = ( char * ) mavalloc_alloc ( 1000 );
+  char * ptr4 = ( char * ) memalloc_alloc ( 1000 );
 
   // if you failed here your allocation on line 383 failed
   TINYTEST_ASSERT( ptr4 ); 
@@ -388,7 +388,7 @@ int test_case_11()
 
   // If you fail here then your Next Fit algorithm picked the wrong node
   TINYTEST_EQUAL( ptr3, ptr4 ); 
-  mavalloc_destroy( );
+  memalloc_destroy( );
   return 1;
 }
 
@@ -399,10 +399,10 @@ int test_case_11()
 */
 int test_case_12()
 {
-  mavalloc_init( 65535, BEST_FIT );
-  mavalloc_destroy( );
+  memalloc_init( 65535, BEST_FIT );
+  memalloc_destroy( );
 
-  int size = mavalloc_size();
+  int size = memalloc_size();
 
   // If you failed here then your destroy did not free
   // your linked list
@@ -417,10 +417,10 @@ int test_case_12()
 */
 int test_case_13()
 {
-  mavalloc_init( 65535, NEXT_FIT );
+  memalloc_init( 65535, NEXT_FIT );
 
-  char * ptr1  = ( char * ) mavalloc_alloc ( 10000 );
-  char * ptr2  = ( char * ) mavalloc_alloc ( 65 );
+  char * ptr1  = ( char * ) memalloc_alloc ( 10000 );
+  char * ptr2  = ( char * ) memalloc_alloc ( 65 );
 
   // If you failed here then your allocation on line 422 failed
   TINYTEST_ASSERT( ptr1 ); 
@@ -428,12 +428,12 @@ int test_case_13()
   // If you failed here then your allocation on line 423 failed
   TINYTEST_ASSERT( ptr2 ); 
 
-  int size = mavalloc_size();
+  int size = memalloc_size();
 
   // If you failed here then your next fit is not splitting free blocks
   // correctly
   TINYTEST_EQUAL( size, 3); 
-  mavalloc_destroy( );
+  memalloc_destroy( );
   return 1;
 }
 
@@ -444,12 +444,12 @@ int test_case_13()
 */
 int test_case_14()
 {
-  mavalloc_init( 65535, BEST_FIT );
+  memalloc_init( 65535, BEST_FIT );
 
-  char * ptr1  = ( char * ) mavalloc_alloc ( 10000 );
-  char * ptr2  = ( char * ) mavalloc_alloc ( 65 );
+  char * ptr1  = ( char * ) memalloc_alloc ( 10000 );
+  char * ptr2  = ( char * ) memalloc_alloc ( 65 );
 
-  int size = mavalloc_size();
+  int size = memalloc_size();
 
   // If you failed here then your allocation on line 448 failed
   TINYTEST_ASSERT( ptr1 ); 
@@ -461,7 +461,7 @@ int test_case_14()
   // If you failed here then your best fit is not splitting free blocks
   // correctly
   TINYTEST_EQUAL( size, 3); 
-  mavalloc_destroy( );
+  memalloc_destroy( );
   return 1;
 }
 
@@ -472,10 +472,10 @@ int test_case_14()
 */
 int test_case_15()
 {
-  mavalloc_init( 65535, WORST_FIT );
+  memalloc_init( 65535, WORST_FIT );
 
-  char * ptr1  = ( char * ) mavalloc_alloc ( 10000 );
-  char * ptr2  = ( char * ) mavalloc_alloc ( 65 );
+  char * ptr1  = ( char * ) memalloc_alloc ( 10000 );
+  char * ptr2  = ( char * ) memalloc_alloc ( 65 );
 
   // If you fail here then your allocation on line 475 failed
   TINYTEST_ASSERT( ptr1 ); 
@@ -483,12 +483,12 @@ int test_case_15()
   // If you fail here then your allocation on line 476 failed
   TINYTEST_ASSERT( ptr2 ); 
 
-  int size = mavalloc_size();
+  int size = memalloc_size();
 
   // If you failed here then your worst fit is not splitting free blocks
   // correctly
   TINYTEST_EQUAL( size, 3); 
-  mavalloc_destroy( );
+  memalloc_destroy( );
   return 1;
 }
 
@@ -499,10 +499,10 @@ int test_case_15()
 */
 int test_case_16()
 {
-  mavalloc_init( 65535, WORST_FIT );
+  memalloc_init( 65535, WORST_FIT );
 
-  char * ptr1  = ( char * ) mavalloc_alloc ( 10000 );
-  char * ptr2  = ( char * ) mavalloc_alloc ( 65 );
+  char * ptr1  = ( char * ) memalloc_alloc ( 10000 );
+  char * ptr2  = ( char * ) memalloc_alloc ( 65 );
 
   // If you fail here then your allocation on line 475 failed
   TINYTEST_ASSERT( ptr1 ); 
@@ -515,7 +515,7 @@ int test_case_16()
   int compare = memcmp( ptr2, "THIS IS THE TEST STRING", 23 );
 
   TINYTEST_EQUAL( compare, 0); 
-  mavalloc_destroy( );
+  memalloc_destroy( );
   return 1;
 }
 
@@ -526,10 +526,10 @@ int test_case_16()
 */
 int test_case_17()
 {
-  mavalloc_init( 65535, NEXT_FIT );
+  memalloc_init( 65535, NEXT_FIT );
 
-  char * ptr1  = ( char * ) mavalloc_alloc ( 10000 );
-  char * ptr2  = ( char * ) mavalloc_alloc ( 65 );
+  char * ptr1  = ( char * ) memalloc_alloc ( 10000 );
+  char * ptr2  = ( char * ) memalloc_alloc ( 65 );
 
   // If you fail here then your allocation on line 475 failed
   TINYTEST_ASSERT( ptr1 ); 
@@ -542,7 +542,7 @@ int test_case_17()
   int compare = memcmp( ptr2, "THIS IS THE TEST STRING", 23 );
 
   TINYTEST_EQUAL( compare, 0); 
-  mavalloc_destroy( );
+  memalloc_destroy( );
   return 1;
 }
 
@@ -553,9 +553,9 @@ int test_case_17()
 */
 int test_case_18()
 {
-  mavalloc_init( 1536, FIRST_FIT );
-  char * ptr1 = ( char * ) mavalloc_alloc ( 1024 );
-  char * ptr2 = ( char * ) mavalloc_alloc ( 256 );
+  memalloc_init( 1536, FIRST_FIT );
+  char * ptr1 = ( char * ) memalloc_alloc ( 1024 );
+  char * ptr2 = ( char * ) memalloc_alloc ( 256 );
 
   // If you failed here your allocation on line 558 failed
   TINYTEST_ASSERT( ptr1 ); 
@@ -563,9 +563,9 @@ int test_case_18()
   // If you failed here your allocation on line 559 failed
   TINYTEST_ASSERT( ptr2 ); 
 
-  mavalloc_free( ptr2 );
+  memalloc_free( ptr2 );
   
-  char * ptr3 = ( char * ) mavalloc_alloc ( 256 );
+  char * ptr3 = ( char * ) memalloc_alloc ( 256 );
 
   // If you failed here your allocation on line 571 failed
   TINYTEST_ASSERT( ptr3 ); 
@@ -573,33 +573,33 @@ int test_case_18()
   // If you fail here then your first fit did not reuse the correct node 
   TINYTEST_EQUAL( ptr2, ptr3 ); 
 
-  mavalloc_destroy( );
+  memalloc_destroy( );
   return 1;
 }
 
 /*
 *
-* TEST CASE 19: Test if your code safeguards against calling mavalloc_alloc 
+* TEST CASE 19: Test if your code safeguards against calling memalloc_alloc 
 *               after destroy 
 *
 */
 int test_case_19()
 {
-  mavalloc_init( 65535, BEST_FIT );
-  char * ptr = ( char * ) mavalloc_alloc ( 65535 );
+  memalloc_init( 65535, BEST_FIT );
+  char * ptr = ( char * ) memalloc_alloc ( 65535 );
 
-  int size = mavalloc_size();
+  int size = memalloc_size();
 
   // If you failed here your allocation on line 13 failed
   TINYTEST_ASSERT( ptr ); 
 
   // If you failed here your linked list did not have a single node
-  // check your mavalloc_alloc or mavalloc_size
+  // check your memalloc_alloc or memalloc_size
   TINYTEST_EQUAL( size, 1); 
 
-  mavalloc_destroy( );
+  memalloc_destroy( );
 
-  char * ptr2 = ( char * ) mavalloc_alloc ( 65535 );
+  char * ptr2 = ( char * ) memalloc_alloc ( 65535 );
 
   // You must return NULL on the alloc on line 605 since it occurs
   // after the destroy
@@ -615,10 +615,10 @@ int test_case_19()
 */
 int test_case_20()
 {
-  mavalloc_init( 12000, NEXT_FIT );
+  memalloc_init( 12000, NEXT_FIT );
 
-  char * ptr1  = ( char * ) mavalloc_alloc ( 10000 );
-  char * ptr2  = ( char * ) mavalloc_alloc ( 65 );
+  char * ptr1  = ( char * ) memalloc_alloc ( 10000 );
+  char * ptr2  = ( char * ) memalloc_alloc ( 65 );
 
   // If you fail here then your allocation on line 623 failed
   TINYTEST_ASSERT( ptr1 ); 
@@ -626,13 +626,13 @@ int test_case_20()
   // If you fail here then your allocation on line 624 failed
   TINYTEST_ASSERT( ptr2 ); 
 
-  mavalloc_free( ptr1 );
+  memalloc_free( ptr1 );
 
-  char * ptr3  = ( char * ) mavalloc_alloc ( 10000 );
+  char * ptr3  = ( char * ) memalloc_alloc ( 10000 );
 
   // Your next fit picked the wrong node if this line fails
   TINYTEST_EQUAL( ptr1, ptr3 ); 
-  mavalloc_destroy( );
+  memalloc_destroy( );
   return 1;
 }
 
