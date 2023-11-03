@@ -22,6 +22,7 @@
 
 #include "memalloc.h"
 #ifdef _TRACY_C
+#define TRACY_ENABLE
 #include "public/tracy/TracyC.h"
 #include <unistd.h>
 #endif
@@ -32,8 +33,8 @@ int memalloc_init( size_t size, enum ALGORITHM algorithm )
   while(1)
   {
     
-    TracyCZone("memalloc_init",1);
-    TracyCZoneEnd("memalloc_init");
+    TracyCZone(__FUNC__, 1);
+    TracyCZoneEnd(__FUNC__);
     sleep(1);
   }
   #endif
