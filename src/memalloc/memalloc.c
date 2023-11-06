@@ -21,23 +21,19 @@
 // THE SOFTWARE.
 
 #include "memalloc.h"
-#ifdef _TRACY_C
-#define TRACY_ENABLE
 #include "public/tracy/TracyC.h"
 #include <unistd.h>
-#endif
 
 int memalloc_init( size_t size, enum ALGORITHM algorithm )
 {
-  #ifdef _TRACY_C
+#ifdef TRACY_ENABLE
   while(1)
   {
-    
     TracyCZone(__FUNC__, 1);
+    sleep(10);
     TracyCZoneEnd(__FUNC__);
-    sleep(1);
   }
-  #endif
+#endif
   return 0;
 }
 

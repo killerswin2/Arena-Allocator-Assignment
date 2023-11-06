@@ -52,25 +52,25 @@ main.o: src/main.c
 	gcc  -c  -Wall -Wno-self-assign -Wno-nonnull src/main.c $(CFLAGS) -Isrc/memalloc -Iext/tinytest
 
 benchmark1.o: benchmarks/benchmark1.c
-	gcc  -c -Wall benchmarks/benchmark1.c $(CFLAGS) -Isrc/memalloc
+	gcc  -c -Wall benchmarks/benchmark1.c $(CFLAGS) -Isrc/memalloc -Iext/tracy-0.10
 
 benchmark2.o: benchmarks/benchmark2.c
-	gcc  -c -Wall benchmarks/benchmark2.c $(CFLAGS) -Isrc/memalloc
+	gcc  -c -Wall benchmarks/benchmark2.c $(CFLAGS) -Isrc/memalloc -Iext/tracy-0.10
 
 benchmark3.o: benchmarks/benchmark3.c
-	gcc  -c -Wall benchmarks/benchmark3.c $(CFLAGS) -Isrc/memalloc
+	gcc  -c -Wall benchmarks/benchmark3.c $(CFLAGS) -Isrc/memalloc -Iext/tracy-0.10
 
 benchmark4.o: benchmarks/benchmark4.c
-	gcc  -c -Wall benchmarks/benchmark4.c $(CFLAGS) -Isrc/memalloc
+	gcc  -c -Wall benchmarks/benchmark4.c $(CFLAGS) -Isrc/memalloc -Iext/tracy-0.10
 
 benchmark5.o: benchmarks/benchmark5.c
-	gcc  -c -Wall benchmarks/benchmark5.c $(CFLAGS) -Isrc/memalloc
+	gcc  -c -Wall benchmarks/benchmark5.c $(CFLAGS) -Isrc/memalloc -Iext/tracy-0.10
 
 memalloc.o: src/memalloc/memalloc.c
-	gcc  -c  -Wall src/memalloc/memalloc.c $(CFLAGS) -Isrc/memalloc
+	gcc  -c  -Wall src/memalloc/memalloc.c $(CFLAGS) -Isrc/memalloc -Iext/tracy-0.10
 
 memalloc_tracy.o: src/memalloc/memalloc.c
-	gcc  -c  -Wall src/memalloc/memalloc.c $(CFLAGS) -o memalloc_tracy.o -Isrc/memalloc -Iext/tracy-0.10 -D_TRACY_C -L. -lTracyClient
+	gcc  -c  -Wall src/memalloc/memalloc.c $(CFLAGS) -o memalloc_tracy.o -Isrc/memalloc -Iext/tracy-0.10 -DTRACY_ENABLE -L. -lTracyClient
 
 libmemalloc.a: memalloc.o
 	ar rcs libmemalloc.a memalloc.o
