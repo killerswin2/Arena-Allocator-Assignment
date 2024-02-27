@@ -11,6 +11,7 @@ its own allocators to handle requests.
 2. You must also benchmark your four implementations of an allocator against the standard system call malloc(). Design and develop a program and capture execution
 time for your four implementations of the arena allocator and compare their performance against malloc().
 3. The results of your benchmarking will be written in a report detailing your findings.
+4. Integrate Tracy Profiling into your allocator. By supplying the macro TRACY_ENABLE, the allocator should then include tracy profiling scopes. Tracy also has memory profiling, which tracks memory allocations, your allocator, by supplying TRACY_ENABLE, should track these memory allocations.
 
 The code you submit for this assignment will be verified against a database consisting of kernel source, github code, stackoverflow, previous student’s submissions and other
 internet resources. Code that is not 100% your own code will result in a grade of 0 and referral to the Office of Student Conduct.
@@ -130,6 +131,26 @@ A Makefile is provided so to build the code type:
 ```
 make
 ```
+
+## Tracy Info
+
+Read the attached tracy-1.pdf for info on integration of tracy into your allocator. To get tracy to run, we need to build it and link the library to our allocator.
+1. Run the shell script cmake_get_dependecies, this gets all the dependiences for tracy.
+2. Run the shell script cmake_lib_build, this will build the shared library for tracy to link with our allocator.
+3. cd to "ext/tracy-0.10/capture/unix" and run make, to compile the capture application for tracy.
+4. (Optional) If your machine has a gui, cd to "ext/tracy-0.10/profiler/unix" and run make, to compile the tracy gui profiler. 
+
+### Tracy Use
+
+What we want to do is run the capture application with our benchmark. Then we use the tracy profiler, to look at was was generated.
+run 
+```
+./capture_release -a 127.0.0.1 -o output.tracy
+``` 
+to capture and output the tracy file. Ctrl + c to stop the capture application.
+Open the tracy capture in the tracy gui profiler to view it.
+
+
 ## Non-Functional Requirements
 
 - Tabs or spaces shall be used to indent the code. Your code must use one or the other. All indentation must be consistent.
