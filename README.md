@@ -11,7 +11,7 @@ its own allocators to handle requests.
 2. You must also benchmark your four implementations of an allocator against the standard system call malloc(). Design and develop a program and capture execution
 time for your four implementations of the arena allocator and compare their performance against malloc().
 3. The results of your benchmarking will be written in a report detailing your findings.
-4. Integrate Tracy Profiling into your allocator. By supplying the macro TRACY_ENABLE, the allocator should then include tracy profiling scopes. Tracy also has memory profiling, which tracks memory allocations, your allocator, by supplying TRACY_ENABLE, should track these memory allocations.
+4. Integrate Tracy Profiling into your allocator. By supplying the macro TRACY_ENABLE, the allocator should then include Tracy profiling scopes. Tracy also has memory profiling, which tracks memory allocations, your allocator, by supplying TRACY_ENABLE, should track these memory allocations. No Tracy scope or Tracy code should be executed or included into the build if TRACY_ENABLE was not supplied.
 
 The code you submit for this assignment will be verified against a database consisting of kernel source, github code, stackoverflow, previous student’s submissions and other
 internet resources. Code that is not 100% your own code will result in a grade of 0 and referral to the Office of Student Conduct.
@@ -134,22 +134,38 @@ make
 
 ## Tracy Info
 
-Read the attached tracy-1.pdf for info on integration of tracy into your allocator. To get tracy to run, we need to build it and link the library to our allocator.
-1. Run the shell script cmake_get_dependecies, this gets all the dependiences for tracy.
-2. Run the shell script cmake_lib_build, this will build the shared library for tracy to link with our allocator.
-3. cd to "ext/tracy-0.10/capture/unix" and run make, to compile the capture application for tracy.
-4. (Optional) If your machine has a gui, cd to "ext/tracy-0.10/profiler/unix" and run make, to compile the tracy gui profiler. 
+Read the attached tracy-1.pdf for info on integration of Tracy into your allocator. To get Tracy to run, we need to build it and link the library to our allocator.
+
+### Tracy Build
+
+This build assumes that the machine you are running the code to benchmark is the same machine you will use Tracy to run the profiler on.
+
+1. Run the shell script ```./cmake_get_dependecies.sh```, this gets all the dependiences for Tracy.
+2. Run the shell script ```./cmake_lib_build.sh```, this will build the shared library for Tracy to link with our allocator.
+3. cd to "ext/tracy-0.10/capture/build/unix".
+4. run ```make -j8``` to compile the capture application for Tracy.
+5. Build the Tracy GUI
+6. cd to "ext/tracy-0.10/profiler/build/unix"
+7. run ```make -j8``` to compile the capture application for Tracy.
 
 ### Tracy Use
 
-What we want to do is run the capture application with our benchmark. Then we use the tracy profiler, to look at was was generated.
+What we want to do is run the capture application with our benchmark. Then we use the Tracy profiler, to look at was was generated.
 run 
 ```
 ./capture_release -a 127.0.0.1 -o output.tracy
 ``` 
-to capture and output the tracy file. Ctrl + c to stop the capture application.
-Open the tracy capture in the tracy gui profiler to view it.
+to capture and output the Tracy file. Ctrl + c to stop the capture application.
+Open the Tracy capture in the Tracy gui profiler to view it.
 
+### Using the Tracy Profiler on different systems
+
+If your linux machine, codespace, or virtual machine does not have enough power or the ability to run the GUI profiler, we can run the GUI on a different OS
+by using the capture executable to create a Tracy Output file and then loading the file on another system. 
+Tracy has already built binaries for Windows. https://github.com/wolfpld/tracy/releases/tag/v0.10. Download Tracy-0.10.7z and unzip.
+
+For Mac and Linux, you will have to build the executables. Easist way is to git clone the repo on to the other machine and 
+follow the build steps above.
 
 ## Non-Functional Requirements
 
@@ -208,7 +224,7 @@ ______________________________________
 
 ## Administrative
 
-This assignment must be coded in C. Any other language will result in 0 points. You programs will be compiled and graded on the course container. Please make sure they compile and run in the container before submitting it. Code that does not compile with the provided Makefile will result in a 0.
+This assignment must be coded in C. The Tracy API used, must be the C API. Any other language will result in 0 points. You programs will be compiled and graded on the course container. Please make sure they compile and run in the container before submitting it. Code that does not compile with the provided Makefile will result in a 0.
 
 Your program is to be turned in via pushing your change to main on GitHub. Submission time is determined by the GitHub system time. You may submit your programs as often as you wish. Only your last submission will be graded.  You may use no outside code.
 
